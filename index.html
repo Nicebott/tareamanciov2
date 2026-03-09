@@ -560,7 +560,7 @@
   }
 
   function eliminar(id) {
-    if (!confirm('Confirmar que quieres eliminar este ?')) return;
+    if (!confirm('Confirmar que quieres eliminar este producto ?')) return;
     items = items.filter(i => i.id !== id);
     save();
     render();
