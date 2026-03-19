@@ -1,0 +1,11 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+Sitemap: https://misemestre.com/sitemap.xml
+
+# Disallow admin pages
+Disallow: /admin
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 10
