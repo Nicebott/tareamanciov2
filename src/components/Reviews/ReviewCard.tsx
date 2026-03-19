@@ -1,0 +1,183 @@
+import React, { useState } from 'react';
+import { formatDistanceToNow } from 'date-fns';
+import { es } from 'date-fns/locale';
+import { User, Trash2, Shield } from 'lucide-react';
+import { motion } from 'framer-motion';
+import RatingStars from './RatingStars';
+import { useAdminContext } from '../../contexts/AdminContext';
+import { deleteReview } from '../../services/adminService';
+import toast from 'react-hot-toast';
+
+interface ReviewCardProps {
+  review: {
+    id: string;
+    rating: number;
+    comment: string;
+    timestamp: string;
+    userName: string;
+    clarity: number;
+    fairness: number;
+    punctuality: number;
+    wouldTakeAgain: number;
+    userId?: string;
+    isAdmin?: boolean;
+  };
+  darkMode: boolean;
+  onDelete?: () => void;
+}
+
+const ReviewCard: React.FC<ReviewCardProps> = ({ review, darkMode, onDelete }) => {
+  const { isAdmin, isSuperAdmin } = useAdminContext();
+  const [deleting, setDeleting] = useState(false);
+  const isCurrentUserAdmin = isAdmin || isSuperAdmin;
+
+  const handleDelete = async () => {
+    if (!window.confirm('Estas seguro de que quieres eliminar esta resena?')) {
+      return;
+    }
+
+    setDeleting(true);
+    const success = await deleteReview(review.id);
+
+    if (success) {
+      toast.success('Resena eliminada exitosamente');
+      if (onDelete) {
+        onDelete();
+      }
+    } else {
+      toast.error('Error al eliminar la resena');
+      setDeleting(false);
+    }
+  };
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className={`p-6 rounded-xl ${
+        darkMode
+          ? 'bg-gray-800/50 hover:bg-gray-800/70'
+          : 'bg-white hover:bg-gray-50'
+      } shadow-lg transition-colors duration-200`}
+    >
+      <div className="flex items-start gap-4">
+        <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold text-white bg-gradient-to-br from-blue-500 to-blue-600`}>
+          {review.userName.split(' ').slice(0, 2).map(word => word[0]).join('').toUpperCase()}
+        </div>
+
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+              <div className="flex items-center gap-2">
+                <h4 className={`font-semibold ${
+                  darkMode ? 'text-white' : 'text-gray-900'
+                }`}>
+                  {review.userName}
+                </h4>
+                {review.isAdmin && (
+                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold ${
+                    darkMode
+                      ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-orange-500/30'
+                      : 'bg-gradient-to-r from-amber-400 to-orange-400 text-white shadow-md'
+                  }`}>
+                    <Shield className="w-3 h-3" />
+                    ADMIN
+                  </span>
+                )}
+              </div>
+              <div className="flex items-center gap-2 mt-1">
+                <RatingStars
+                  rating={review.rating}
+                  size="sm"
+                  darkMode={darkMode}
+                />
+                <span className={`text-sm ${
+                  darkMode ? 'text-gray-400' : 'text-gray-500'
+                }`}>
+                  {formatDistanceToNow(new Date(review.timestamp), {
+                    addSuffix: true,
+                    locale: es
+                  })}
+                </span>
+              </div>
+            </div>
+            {isCurrentUserAdmin && (
+              <button
+                onClick={handleDelete}
+                disabled={deleting}
+                className={`p-2 rounded-lg transition-colors ${
+                  deleting
+                    ? darkMode ? 'bg-gray-700 text-gray-500' : 'bg-gray-100 text-gray-400'
+                    : darkMode
+                      ? 'text-red-400 hover:bg-red-900/30'
+                      : 'text-red-500 hover:bg-red-50'
+                }`}
+                title="Eliminar resena"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          <div className={`mt-4 text-sm whitespace-pre-wrap ${
+            darkMode ? 'text-gray-300' : 'text-gray-600'
+          }`}>
+            {review.comment}
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
+            <div className="flex flex-col">
+              <span className={`text-xs font-medium ${
+                darkMode ? 'text-gray-400' : 'text-gray-500'
+              }`}>
+                Claridad
+              </span>
+              <span className={`font-semibold ${
+                darkMode ? 'text-white' : 'text-gray-900'
+              }`}>
+                {review.clarity}/10
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className={`text-xs font-medium ${
+                darkMode ? 'text-gray-400' : 'text-gray-500'
+              }`}>
+                Justicia
+              </span>
+              <span className={`font-semibold ${
+                darkMode ? 'text-white' : 'text-gray-900'
+              }`}>
+                {review.fairness}/10
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className={`text-xs font-medium ${
+                darkMode ? 'text-gray-400' : 'text-gray-500'
+              }`}>
+                Puntualidad
+              </span>
+              <span className={`font-semibold ${
+                darkMode ? 'text-white' : 'text-gray-900'
+              }`}>
+                {review.punctuality}/10
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className={`text-xs font-medium ${
+                darkMode ? 'text-gray-400' : 'text-gray-500'
+              }`}>
+                Lo tomaria de nuevo
+              </span>
+              <span className={`font-semibold ${
+                darkMode ? 'text-white' : 'text-gray-900'
+              }`}>
+                {review.wouldTakeAgain}/10
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+export default ReviewCard;

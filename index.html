@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google" content="notranslate">
+
+    <!-- Preconnect to improve performance -->
+    <link rel="preconnect" href="https://osxvwmmxgktpthiuumka.supabase.co" crossorigin>
+    <link rel="dns-prefetch" href="https://osxvwmmxgktpthiuumka.supabase.co">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" fetchpriority="low" />
+
+    <title>MiSemestre - Programación Docente UASD 2026-10</title>
+
+    <meta name="description" content="Programación docente UASD 2026-10. Encuentra horarios, profesores, asignaturas y reseñas de la Universidad Autónoma de Santo Domingo. Modalidades virtual, semipresencial y presencial." />
+    <meta name="keywords" content="Programación docente uasd, uasd, MiSemestre, universidad uasd, horarios uasd, asignaturas uasd, profesores uasd, universidad autonoma santo domingo, uasd virtual, uasd semipresencial, inscripciones uasd, calendario academico uasd, resenas profesores uasd, calificaciones profesores uasd, nrc uasd, campus uasd" />
+    <meta name="author" content="zierow" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Spanish" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="rating" content="General" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MiSemestre" />
+    <meta property="og:title" content="MiSemestre - Programación Docente UASD 2026-10" />
+    <meta property="og:description" content="Encuentra y explora las asignaturas, horarios y profesores de la Universidad Autónoma de Santo Domingo (UASD). Semestre 2026-10 con modalidades virtual, semipresencial y presencial." />
+    <meta property="og:url" content="https://misemestre.com" />
+    <meta property="og:locale" content="es_DO" />
+    <meta property="og:image" content="https://misemestre.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="MiSemestre - Plataforma de Programación Docente UASD" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@MiSemestre" />
+    <meta name="twitter:title" content="MiSemestre - Programación Docente UASD 2026-10" />
+    <meta name="twitter:description" content="Encuentra y explora las asignaturas, horarios y profesores de la UASD. Semestre 2026-10." />
+    <meta name="twitter:image" content="https://misemestre.com/og-image.jpg" />
+
+    <link rel="canonical" href="https://misemestre.com" />
+    <link rel="alternate" hreflang="es-do" href="https://misemestre.com" />
+    <link rel="alternate" hreflang="es" href="https://misemestre.com" />
+
+    <meta name="theme-color" content="#3B82F6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1F2937" media="(prefers-color-scheme: dark)" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MiSemestre" />
+
+    <!-- Skeleton styles: se muestran instantáneamente antes de que React cargue -->
+    <style>
+      #app-skeleton {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background: #111827;
+        font-family: sans-serif;
+      }
+
+      /* Navbar skeleton */
+      #app-skeleton .sk-nav {
+        height: 64px;
+        background: #1f2937;
+        border-bottom: 1px solid #374151;
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        gap: 12px;
+      }
+      #app-skeleton .sk-nav-logo {
+        width: 120px;
+        height: 20px;
+        background: #374151;
+        border-radius: 4px;
+      }
+
+      /* Main content skeleton */
+      #app-skeleton .sk-main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 48px 16px;
+        gap: 16px;
+        flex: 1;
+      }
+
+      /* Icon circle */
+      #app-skeleton .sk-icon {
+        width: 64px;
+        height: 64px;
+        background: #1d4ed8;
+        border-radius: 50%;
+        opacity: 0.4;
+      }
+
+      /* Title skeleton - replica exacta del h1 */
+      #app-skeleton .sk-title {
+        width: 340px;
+        height: 40px;
+        background: #374151;
+        border-radius: 8px;
+      }
+
+      /* Subtitle skeleton */
+      #app-skeleton .sk-subtitle {
+        width: 420px;
+        height: 20px;
+        background: #374151;
+        border-radius: 8px;
+        opacity: 0.6;
+        max-width: 90vw;
+      }
+
+      /* Search bar skeleton */
+      #app-skeleton .sk-search {
+        display: flex;
+        gap: 12px;
+        width: 100%;
+        max-width: 896px;
+        margin-top: 8px;
+      }
+      #app-skeleton .sk-search-input {
+        flex: 1;
+        height: 48px;
+        background: #1f2937;
+        border: 1px solid #374151;
+        border-radius: 8px;
+      }
+      #app-skeleton .sk-search-select {
+        width: 160px;
+        height: 48px;
+        background: #1f2937;
+        border: 1px solid #374151;
+        border-radius: 8px;
+      }
+      #app-skeleton .sk-search-btn {
+        width: 100px;
+        height: 48px;
+        background: #1d4ed8;
+        border-radius: 8px;
+        opacity: 0.7;
+      }
+
+      /* Cards grid skeleton */
+      #app-skeleton .sk-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+        width: 100%;
+        max-width: 1200px;
+        margin-top: 16px;
+      }
+      #app-skeleton .sk-card {
+        height: 200px;
+        background: #1f2937;
+        border: 1px solid #374151;
+        border-radius: 12px;
+      }
+
+      /* Shimmer animation */
+      @keyframes shimmer {
+        0% { opacity: 0.5; }
+        50% { opacity: 1; }
+        100% { opacity: 0.5; }
+      }
+      #app-skeleton .sk-title,
+      #app-skeleton .sk-subtitle,
+      #app-skeleton .sk-nav-logo,
+      #app-skeleton .sk-card {
+        animation: shimmer 1.5s ease-in-out infinite;
+      }
+
+      /* Ocultar skeleton cuando React ya montó */
+      #root:not(:empty) #app-skeleton {
+        display: none;
+      }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "MiSemestre",
+      "alternateName": "Programación Docente UASD",
+      "url": "https://misemestre.com",
+      "description": "Plataforma para consultar la programación docente de la Universidad Autónoma de Santo Domingo (UASD)",
+      "publisher": {
+        "@type": "Organization",
+        "name": "zierow",
+        "url": "https://misemestre.com"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://misemestre.com?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "Universidad Autónoma de Santo Domingo",
+      "alternateName": "UASD",
+      "url": "https://uasd.edu.do",
+      "description": "Universidad pública de la República Dominicana"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "MiSemestre",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "DOP"
+      },
+      "description": "Aplicación web para consultar horarios, profesores y asignaturas de la UASD",
+      "featureList": [
+        "Búsqueda de asignaturas",
+        "Horarios por campus",
+        "Reseñas de profesores",
+        "Chat en tiempo real",
+        "Foros de discusión",
+        "Modalidad virtual y semipresencial"
+      ]
+    }
+    </script>
+  </head>
+  <body class="notranslate">
+    <div id="root">
+      <!-- Skeleton visible instantáneamente mientras React carga.
+           Desaparece automáticamente cuando React monta el contenido real. -->
+      <div id="app-skeleton">
+
+        <!-- Navbar -->
+        <div class="sk-nav">
+          <div class="sk-nav-logo"></div>
+        </div>
+
+        <!-- Main -->
+        <div class="sk-main">
+          <div class="sk-icon"></div>
+          <div class="sk-title"></div>
+          <div class="sk-subtitle"></div>
+
+          <!-- Search bar -->
+          <div class="sk-search">
+            <div class="sk-search-input"></div>
+            <div class="sk-search-select"></div>
+            <div class="sk-search-btn"></div>
+          </div>
+
+          <!-- Cards -->
+          <div class="sk-grid">
+            <div class="sk-card"></div>
+            <div class="sk-card"></div>
+            <div class="sk-card"></div>
+            <div class="sk-card"></div>
+            <div class="sk-card"></div>
+            <div class="sk-card"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
