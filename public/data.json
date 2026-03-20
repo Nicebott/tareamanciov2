@@ -1,0 +1,62 @@
+[
+  {
+    "nrc": "10002",
+    "asignatura": "Principios De Administración",
+    "profesor": "Blas  Acevedo",
+    "horario": "09 a 12 JU",
+    "modalidad": "Presencial",
+    "provincia": "Santo Domingo",
+    "clave": "ADM1120",
+    "calificacion": "N/A"
+  },
+  {
+    "nrc": "10003",
+    "asignatura": "Principios De Administración",
+    "profesor": "Emil Jacobo Moquete Jiminian",
+    "horario": "10 a 13 VI",
+    "modalidad": "Presencial",
+    "provincia": "Higüey",
+    "clave": "ADM1120",
+    "calificacion": "N/A"
+  },
+  {
+    "nrc": "10004",
+    "asignatura": "Principios De Administración",
+    "profesor": "Virginia  Mendez Ramirez",
+    "horario": "13 a 16 JU",
+    "modalidad": "Presencial",
+    "provincia": "Barahona",
+    "clave": "ADM1120",
+    "calificacion": "N/A"
+  },
+  {
+    "nrc": "10005",
+    "asignatura": "Principios De Administración",
+    "profesor": "Juan  Olivo Peña",
+    "horario": "19 a 22 MI",
+    "modalidad": "Presencial",
+    "provincia": "San Fco de Macorís",
+    "clave": "ADM1120",
+    "calificacion": "N/A"
+  },
+  {
+    "nrc": "10006",
+    "asignatura": "Principios De Administración",
+    "profesor": "Wendy Paulma Peña Baez",
+    "horario": "07 a 10 SA",
+    "modalidad": "Presencial",
+    "provincia": "Mao",
+    "clave": "ADM1120",
+    "calificacion": "N/A"
+  },
+    {
+    "nrc": "46123",
+    "asignatura": "Biología General I (Pi)",
+    "profesor": "Clara  Aybar",
+    "horario": "13 a 16 JU",
+    "modalidad": "Presencial",
+    "provincia": "Nagua",
+    "clave": "BIO0120",
+    "calificacion": "N/A"
+  }
+]
