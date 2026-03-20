@@ -8,6 +8,7 @@ import ChatEntrance from './Chat/ChatEntrance';
 import { supabase } from '../supabase';
 import { checkIsAdmin, checkIsSuperAdmin } from '../services/adminService';
 import { motion, AnimatePresence } from 'framer-motion';
+import { censorMessage } from '../utils/censor';
 
 interface ChatProps {
   darkMode?: boolean;
@@ -65,7 +66,8 @@ const Chat: React.FC<ChatProps> = ({ darkMode = false, onOpenAuth }) => {
   }, [user?.id, session]);
 
   const handleSendMessage = async (text: string) => {
-    const success = await sendMessage(text);
+    const cleanText = censorMessage(text);
+    const success = await sendMessage(cleanText);
     if (!success) {
       alert('Error al enviar el mensaje. Por favor, intenta de nuevo.');
     }

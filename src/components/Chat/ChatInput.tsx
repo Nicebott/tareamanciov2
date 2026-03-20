@@ -1,9 +1,11 @@
 import React, { useState, lazy, Suspense, useRef, useEffect } from 'react';
-import { Smile, Send, Sparkles } from 'lucide-react';
+import { Smile, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { EmojiClickData } from 'emoji-picker-react';
 
 const EmojiPicker = lazy(() => import('emoji-picker-react'));
+
+const MAX_CHARS = 400;
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -16,6 +18,8 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, darkMode, username
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const emojiPickerRef = useRef<HTMLDivElement>(null);
+
+  const overLimit = message.length > MAX_CHARS;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -38,7 +42,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, darkMode, username
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim()) {
+    if (message.trim() && !overLimit) {
       onSendMessage(message);
       setMessage('');
       setShowEmojiPicker(false);
@@ -54,9 +58,11 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, darkMode, username
       <motion.div
         animate={isFocused ? { scale: 1.01 } : { scale: 1 }}
         className={`flex rounded-xl overflow-hidden border-2 transition-colors ${
-          isFocused
-            ? darkMode ? 'border-blue-500/50' : 'border-blue-400/50'
-            : darkMode ? 'border-gray-700' : 'border-gray-200'
+          overLimit
+            ? 'border-red-500/50'
+            : isFocused
+              ? darkMode ? 'border-blue-500/50' : 'border-blue-400/50'
+              : darkMode ? 'border-gray-700' : 'border-gray-200'
         } ${darkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}
       >
         <input
@@ -88,11 +94,11 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, darkMode, username
         </motion.button>
         <motion.button
           type="submit"
-          disabled={!message.trim()}
-          whileHover={{ scale: message.trim() ? 1.05 : 1 }}
-          whileTap={{ scale: message.trim() ? 0.95 : 1 }}
+          disabled={!message.trim() || overLimit}
+          whileHover={{ scale: message.trim() && !overLimit ? 1.05 : 1 }}
+          whileTap={{ scale: message.trim() && !overLimit ? 0.95 : 1 }}
           className={`px-3 md:px-4 py-2 flex items-center justify-center flex-shrink-0 transition-all relative overflow-hidden ${
-            message.trim()
+            message.trim() && !overLimit
               ? darkMode
                 ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white'
                 : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 text-white'
@@ -102,7 +108,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, darkMode, username
           }`}
         >
           <Send className="w-4 h-4 md:w-5 md:h-5 relative z-10" />
-          {message.trim() && (
+          {message.trim() && !overLimit && (
             <motion.div
               className="absolute inset-0 bg-white opacity-0 hover:opacity-20"
               animate={{ scale: [1, 1.2, 1] }}
@@ -111,6 +117,24 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, darkMode, username
           )}
         </motion.button>
       </motion.div>
+
+      {/* Contador de caracteres */}
+      {message.length > 0 && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className={`text-xs mt-1 text-right ${
+            overLimit
+              ? 'text-red-500'
+              : darkMode ? 'text-gray-400' : 'text-gray-500'
+          }`}
+        >
+          {overLimit
+            ? `Límite excedido (${message.length}/${MAX_CHARS})`
+            : `${message.length}/${MAX_CHARS}`}
+        </motion.p>
+      )}
+
       <AnimatePresence>
         {showEmojiPicker && (
           <motion.div
@@ -134,9 +158,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, darkMode, username
                 height={350}
                 lazyLoadEmojis={true}
                 searchPlaceHolder="Buscar emoji..."
-                previewConfig={{
-                  showPreview: false
-                }}
+                previewConfig={{ showPreview: false }}
               />
             </Suspense>
           </motion.div>
