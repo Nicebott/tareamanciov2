@@ -8,6 +8,7 @@ import SEO from '../components/SEO';
 import { Course, Section } from '../types';
 import { fetchCourseData } from '../api/courseData';
 import { normalizeText } from '../utils/stringUtils';
+import { getCampusFromSlug } from '../utils/campusUtils';
 import { GraduationCap } from 'lucide-react';
 
 const ALL_CAMPUSES = [
@@ -80,7 +81,14 @@ const HomePage: React.FC<HomePageProps> = memo(({ darkMode, currentUser, onOpenA
 
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
   const searchQuery = searchParams.get('q') || '';
-  const selectedCampus = searchParams.get('campus') || '';
+
+  // Detectar campus desde la ruta /campus/:campus y mapear slug a nombre real
+  const campusSlugFromRoute = location.pathname.startsWith('/campus/')
+    ? location.pathname.split('/campus/')[1]?.split('?')[0] || ''
+    : '';
+  const campusFromRoute = campusSlugFromRoute ? getCampusFromSlug(campusSlugFromRoute) : '';
+
+  const selectedCampus = searchParams.get('campus') || campusFromRoute || '';
   const itemsPerPage = 21;
 
   // Modalidad se lee de la ruta, no del URL param — elimina el bug de doble clic

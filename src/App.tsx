@@ -12,6 +12,7 @@ import { checkIsAdmin, checkIsSuperAdmin } from './services/adminService';
 
 // Lazy load page components
 const HomePage = lazy(() => import('./pages/HomePage'));
+const CampusPage = lazy(() => import('./pages/CampusPage'));
 const FAQPage = lazy(() => import('./pages/FAQPage'));
 const ForumPage = lazy(() => import('./pages/ForumPage'));
 const AdminPage = lazy(() => import('./pages/AdminPage'));
@@ -124,6 +125,16 @@ function App() {
                 path="/semipresencial"
                 element={
                   <HomePage
+                    darkMode={darkMode}
+                    currentUser={currentUser}
+                    onOpenAuth={handleOpenAuth}
+                  />
+                }
+              />
+              <Route
+                path="/campus/:campus"
+                element={
+                  <CampusPage
                     darkMode={darkMode}
                     currentUser={currentUser}
                     onOpenAuth={handleOpenAuth}
