@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Star, Trash2, Search, ChevronLeft, ChevronRight, MessageSquare } from 'lucide-react';
+import { Star, Trash2, Search, ChevronLeft, ChevronRight, MessageSquare, AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../supabase';
+import { useAdminContext } from '../contexts/AdminContext';
 import toast from 'react-hot-toast';
 
 interface ReviewsPanelProps {
@@ -55,6 +56,7 @@ const MetricBadge = ({ label, value, darkMode }: { label: string; value: number;
 );
 
 const ReviewsPanel: React.FC<ReviewsPanelProps> = ({ darkMode }) => {
+  const { isAdmin, isSuperAdmin, loading: authLoading } = useAdminContext();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -64,7 +66,11 @@ const ReviewsPanel: React.FC<ReviewsPanelProps> = ({ darkMode }) => {
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
 
+  const isUserAdmin = isAdmin || isSuperAdmin;
+
   const fetchReviews = async () => {
+    if (!isUserAdmin) return;
+
     setLoading(true);
     let query = supabase
       .from('reviews')
@@ -86,10 +92,17 @@ const ReviewsPanel: React.FC<ReviewsPanelProps> = ({ darkMode }) => {
   };
 
   useEffect(() => {
-    fetchReviews();
-  }, [filter, page, search]);
+    if (isUserAdmin) {
+      fetchReviews();
+    }
+  }, [filter, page, search, isUserAdmin]);
 
   const handleDelete = async (id: string) => {
+    if (!isUserAdmin) {
+      toast.error('No tienes permisos para eliminar reseñas');
+      return;
+    }
+
     setDeleting(id);
     const { error } = await supabase.from('reviews').delete().eq('id', id);
     if (!error) {
@@ -104,6 +117,29 @@ const ReviewsPanel: React.FC<ReviewsPanelProps> = ({ darkMode }) => {
   };
 
   const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+
+  if (authLoading) {
+    return (
+      <div className={`flex items-center justify-center h-64 ${
+        darkMode ? 'text-white' : 'text-gray-900'
+      }`}>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+        <span className="ml-2">Verificando permisos...</span>
+      </div>
+    );
+  }
+
+  if (!isUserAdmin) {
+    return (
+      <div className={`text-center py-12 ${
+        darkMode ? 'text-gray-400' : 'text-gray-600'
+      }`}>
+        <AlertTriangle className="w-16 h-16 mx-auto mb-4 opacity-50" />
+        <h3 className="text-xl font-medium mb-2">Acceso Denegado</h3>
+        <p>No tienes permisos de administrador para acceder a esta sección.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4">
