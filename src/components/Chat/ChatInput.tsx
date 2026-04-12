@@ -1,8 +1,7 @@
 import React, { useState, lazy, Suspense, useRef, useEffect } from 'react';
 import { Smile, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import type { EmojiClickData } from 'emoji-picker-react';
-import { Theme } from 'emoji-picker-react';
+import type { EmojiClickData, Theme } from 'emoji-picker-react';
 
 const EmojiPicker = lazy(() => import('emoji-picker-react'));
 
@@ -154,7 +153,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, darkMode }) => {
             }>
               <EmojiPicker
                 onEmojiClick={handleEmojiClick}
-                theme={darkMode ? Theme.DARK : Theme.LIGHT}
+                theme={darkMode ? 'dark' as Theme : 'light' as Theme}
                 width={280}
                 height={350}
                 lazyLoadEmojis={true}
