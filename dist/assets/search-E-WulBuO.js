@@ -1,0 +1,1 @@
+import{c as e}from"./index-WK3EiL-Q.js";const a=e("ChevronLeft",[["path",{d:"m15 18-6-6 6-6",key:"1wnfg3"}]]),h=e("ChevronRight",[["path",{d:"m9 18 6-6-6-6",key:"mthhwq"}]]),t=e("Search",[["circle",{cx:"11",cy:"11",r:"8",key:"4ej97u"}],["path",{d:"m21 21-4.3-4.3",key:"1qie3q"}]]);export{a as C,t as S,h as a};

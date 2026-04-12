@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postbuild": "react-snap"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
@@ -36,9 +37,55 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "postcss": "^8.4.35",
+    "react-snap": "^1.23.0",
     "tailwindcss": "^3.4.1",
     "terser": "^5.46.0",
     "typescript": "^5.2.2",
     "vite": "^5.1.4"
+  },
+  "reactSnap": {
+    "source": "dist",
+    "crawl": false,
+    "include": [
+      "/",
+      "/virtual",
+      "/semipresencial",
+      "/faq",
+      "/foro",
+      "/terms",
+      "/privacy",
+      "/community-rules",
+      "/campus/santo-domingo",
+      "/campus/santiago",
+      "/campus/san-francisco-de-macoris",
+      "/campus/puerto-plata",
+      "/campus/san-juan",
+      "/campus/barahona",
+      "/campus/la-vega",
+      "/campus/san-pedro-de-macoris",
+      "/campus/san-cristobal",
+      "/campus/higuey",
+      "/campus/bonao",
+      "/campus/mao",
+      "/campus/bani",
+      "/campus/hato-mayor",
+      "/campus/azua-de-compostela",
+      "/campus/neyba",
+      "/campus/cotui",
+      "/campus/nagua",
+      "/campus/dajabon",
+      "/campus/moca",
+      "/campus/jarabacoa",
+      "/campus/montecristi",
+      "/campus/samana",
+      "/campus/elias-pina",
+      "/campus/hermanas-mirabal",
+      "/campus/yamasa",
+      "/campus/finca-exp-engombe"
+    ],
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ]
   }
 }
