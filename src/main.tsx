@@ -1,5 +1,5 @@
 import { StrictMode } from 'react';
-import { createRoot, hydrateRoot } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
@@ -10,7 +10,7 @@ import './index.css';
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Failed to find the root element');
 
-const appContent = (
+createRoot(rootElement).render(
   <StrictMode>
     <HelmetProvider>
       <BrowserRouter>
@@ -23,9 +23,3 @@ const appContent = (
     </HelmetProvider>
   </StrictMode>
 );
-
-if (rootElement.hasChildNodes()) {
-  hydrateRoot(rootElement, appContent);
-} else {
-  createRoot(rootElement).render(appContent);
-}
