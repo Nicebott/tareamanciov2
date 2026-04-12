@@ -23,16 +23,19 @@ const CourseList: React.FC<CourseListProps> = ({ courses, sections, onRateSectio
                 <p>Campus: {section.campus}</p>
                 <div className="mt-2 flex items-center">
                   <span className="mr-2">Calificación:</span>
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                      key={star}
-                      size={20}
-                      fill={star <= section.rating ? 'gold' : 'none'}
-                      stroke="gold"
-                      className="cursor-pointer"
-                      onClick={() => onRateSection(section.id, star)}
-                    />
-                  ))}
+                  {[1, 2, 3, 4, 5].map((star) => {
+                    const ratingValue = section.rating === 'positive' ? 5 : section.rating === 'neutral' ? 3 : section.rating === 'negative' ? 1 : 0;
+                    return (
+                      <Star
+                        key={star}
+                        size={20}
+                        fill={star <= ratingValue ? 'gold' : 'none'}
+                        stroke="gold"
+                        className="cursor-pointer"
+                        onClick={() => onRateSection(section.id, star)}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             ))}

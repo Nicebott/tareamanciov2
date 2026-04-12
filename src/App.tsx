@@ -20,6 +20,8 @@ const TermsPage = lazy(() => import('./pages/TermsPage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const CommunityRulesPage = lazy(() => import('./pages/CommunityRulesPage'));
+const ProfessorPage = lazy(() => import('./pages/ProfessorPage'));
+const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
 
 function App() {
   const { user } = useAuthContext();
@@ -142,6 +144,16 @@ function App() {
                 }
               />
               <Route
+                path="/profesor/:name"
+                element={
+                  <ProfessorPage
+                    darkMode={darkMode}
+                    currentUser={currentUser}
+                    onOpenAuth={handleOpenAuth}
+                  />
+                }
+              />
+              <Route
                 path="/faq"
                 element={<FAQPage darkMode={darkMode} />}
               />
@@ -173,6 +185,10 @@ function App() {
               <Route
                 path="/community-rules"
                 element={<CommunityRulesPage darkMode={darkMode} />}
+              />
+              <Route
+                path="/reset-password"
+                element={<ResetPasswordPage darkMode={darkMode} />}
               />
             </Routes>
           </Suspense>

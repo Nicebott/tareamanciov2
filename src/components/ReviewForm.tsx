@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import RatingStars from './RatingStars';
-import RatingMetric from './RatingMetric';
+import RatingStars from './Reviews/RatingStars';
+import RatingMetric from './Reviews/RatingMetric';
 import { MessageSquare } from 'lucide-react';
 
 interface ReviewFormProps {

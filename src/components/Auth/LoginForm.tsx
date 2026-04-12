@@ -8,9 +8,10 @@ import AuthInput from './AuthInput';
 interface LoginFormProps {
   darkMode: boolean;
   onClose: () => void;
+  onForgotPassword?: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ darkMode, onClose }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ darkMode, onClose, onForgotPassword }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -63,6 +64,22 @@ const LoginForm: React.FC<LoginFormProps> = ({ darkMode, onClose }) => {
         required
       />
 
+      {onForgotPassword && (
+        <div className="text-right">
+          <button
+            type="button"
+            onClick={onForgotPassword}
+            className={`text-sm font-medium transition-colors ${
+              darkMode
+                ? 'text-blue-400 hover:text-blue-300'
+                : 'text-blue-600 hover:text-blue-700'
+            }`}
+          >
+            ¿Olvidaste tu contraseña?
+          </button>
+        </div>
+      )}
+
       <motion.button
         type="submit"
         disabled={loading}
@@ -93,3 +110,4 @@ const LoginForm: React.FC<LoginFormProps> = ({ darkMode, onClose }) => {
 };
 
 export default LoginForm;
+

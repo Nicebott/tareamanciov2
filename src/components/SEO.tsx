@@ -56,9 +56,9 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:image:alt" content={title} />
 
       <link rel="canonical" href={canonicalUrl} />
-      <link rel="alternate" hreflang="es-do" href={canonicalUrl} />
-      <link rel="alternate" hreflang="es" href={canonicalUrl} />
-      <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+      <link rel="alternate" hrefLang="es-do" href={canonicalUrl} />
+      <link rel="alternate" hrefLang="es" href={canonicalUrl} />
+      <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
 
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
       <meta name="googlebot" content="index, follow" />

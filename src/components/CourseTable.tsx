@@ -5,9 +5,9 @@ import { supabase } from '../supabase';
 import { Card, CardContent } from './ui/Card';
 import Button from './ui/Button';
 import Badge from './ui/Badge';
+import { useNavigate } from 'react-router-dom';
 
 // Lazy load modals to reduce initial bundle size
-const ProfessorDetailsModal = React.lazy(() => import('./ProfessorDetailsModal'));
 const ReviewModal = React.lazy(() => import('./ReviewModal'));
 
 interface ProfessorRating {
@@ -116,6 +116,7 @@ const CourseCard = memo<{
 CourseCard.displayName = 'CourseCard';
 
 const CourseTable: React.FC<CourseTableProps> = ({ courses, sections, onRateSection, darkMode, currentUser }) => {
+  const navigate = useNavigate();
   const [selectedProfessor, setSelectedProfessor] = useState<{ id: string; name: string } | null>(null);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [professorRatings, setProfessorRatings] = useState<Record<string, ProfessorRating>>({});
@@ -220,8 +221,8 @@ const CourseTable: React.FC<CourseTableProps> = ({ courses, sections, onRateSect
   }, [currentUser, onRateSection]);
 
   const handleDetailsClick = useCallback((professor: { id: string; name: string }) => {
-    setSelectedProfessor(professor);
-  }, []);
+    navigate(`/profesor/${encodeURIComponent(professor.name)}`);
+  }, [navigate]);
 
   const getModalityBadge = useCallback((modalidad: string) => {
     const modalidadLower = modalidad.toLowerCase();
@@ -279,18 +280,6 @@ const CourseTable: React.FC<CourseTableProps> = ({ courses, sections, onRateSect
       })}
 
       <Suspense fallback={<div className="fixed inset-0 bg-black bg-opacity-50 z-50" />}>
-        {selectedProfessor && !showReviewModal && (
-          <ProfessorDetailsModal
-            key={`details-${selectedProfessor.id}`}
-            isOpen={!!selectedProfessor}
-            onClose={() => setSelectedProfessor(null)}
-            darkMode={darkMode}
-            professorId={selectedProfessor.id}
-            professorName={selectedProfessor.name}
-            currentUser={currentUser}
-          />
-        )}
-
         {showReviewModal && selectedProfessor && currentUser && (
           <ReviewModal
             key={`review-${selectedProfessor.id}`}

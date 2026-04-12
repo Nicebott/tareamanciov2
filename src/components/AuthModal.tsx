@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { X, GraduationCap } from 'lucide-react';
+import { X, GraduationCap, KeyRound } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AuthTabs from './Auth/AuthTabs';
 import LoginForm from './Auth/LoginForm';
 import RegisterForm from './Auth/RegisterForm';
+import ForgotPasswordForm from './Auth/ForgotPasswordForm';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -13,8 +14,19 @@ interface AuthModalProps {
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, darkMode }) => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   if (!isOpen) return null;
+
+  const handleClose = () => {
+    setShowForgotPassword(false);
+    setActiveTab('login');
+    onClose();
+  };
+
+  const handleBackFromForgot = () => {
+    setShowForgotPassword(false);
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm p-4">
@@ -34,7 +46,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, darkMode }) => {
         }`} />
 
         <button
-          onClick={onClose}
+          onClick={handleClose}
           className={`absolute top-4 right-4 p-2 rounded-full z-10 ${
             darkMode
               ? 'text-gray-400 hover:text-white hover:bg-gray-700/50 backdrop-blur-sm'
@@ -55,10 +67,15 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, darkMode }) => {
                 : 'bg-gradient-to-br from-blue-500 to-blue-600'
             }`}
           >
-            <GraduationCap className="w-8 h-8 text-white" />
+            {showForgotPassword ? (
+              <KeyRound className="w-8 h-8 text-white" />
+            ) : (
+              <GraduationCap className="w-8 h-8 text-white" />
+            )}
           </motion.div>
 
           <motion.h2
+            key={showForgotPassword ? 'forgot' : 'auth'}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -66,10 +83,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, darkMode }) => {
               darkMode ? 'text-white' : 'text-gray-900'
             }`}
           >
-            Bienvenido a MiSemestre
+            {showForgotPassword ? 'Recuperar contraseña' : 'Bienvenido a MiSemestre'}
           </motion.h2>
 
           <motion.p
+            key={showForgotPassword ? 'forgot-desc' : 'auth-desc'}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -77,20 +95,37 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, darkMode }) => {
               darkMode ? 'text-gray-400' : 'text-gray-600'
             }`}
           >
-            Accede a tu cuenta para continuar
+            {showForgotPassword
+              ? 'Te enviaremos un enlace para restablecer tu contraseña'
+              : 'Accede a tu cuenta para continuar'}
           </motion.p>
 
-          <AuthTabs
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
-            darkMode={darkMode}
-          />
-
           <AnimatePresence mode="wait">
-            {activeTab === 'login' ? (
-              <LoginForm key="login" darkMode={darkMode} onClose={onClose} />
+            {showForgotPassword ? (
+              <ForgotPasswordForm
+                key="forgot"
+                darkMode={darkMode}
+                onBack={handleBackFromForgot}
+              />
             ) : (
-              <RegisterForm key="register" darkMode={darkMode} onClose={onClose} />
+              <>
+                <AuthTabs
+                  activeTab={activeTab}
+                  onTabChange={setActiveTab}
+                  darkMode={darkMode}
+                />
+
+                {activeTab === 'login' ? (
+                  <LoginForm
+                    key="login"
+                    darkMode={darkMode}
+                    onClose={handleClose}
+                    onForgotPassword={() => setShowForgotPassword(true)}
+                  />
+                ) : (
+                  <RegisterForm key="register" darkMode={darkMode} onClose={handleClose} />
+                )}
+              </>
             )}
           </AnimatePresence>
         </div>
